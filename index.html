@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+  <head>
+    <title>AI Agent Client</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap&subset=korean">
+    <link rel="stylesheet" href="public/index.css" >
+    <link rel="stylesheet" href="public/allert.css">
+    <script src="src/main.js" type="module"></script>
+    <script async src="lib/crypto.js"></script>
+    <script async src="lib/allert.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  </head>
+  <body>
+    <div class="flex-container">
+      <div class="flex-box mcard">
+          <div class="mcard-header pb-2">
+            <img src="/public/image/ginside_white.png" style="width: 100%;">
+        <!--     <h4 class="mt-3 mb-4">GigaGenie On Web</h4> -->
+          </div>
+
+          <div class="mcard-body pt-3">
+            <div class="mcard-status clearfix">
+              <span class="float-left mr-4" id="conn_status"><i class="fas fa-plug mr-1"></i>Connecting to AI Agent Server</span>
+              <span class="float-left" id="rec_status"><i class="fas fa-microphone mr-1"></i>Idle</span>
+              <a class="float-right" id="btn_modal" href=''><i class="fas fa-cog mr-1"></i></a>
+            </div>
+            <!--
+            <div class="mcard-result">
+                <form>
+                  <div class="form-group row mb-0">
+                    <label for="stt_result" class="col-sm-4 col-form-label">음성인식 결과</label>
+                    <div class="col-sm-8">
+                      <input type="text" readonly class="form-control-plaintext" id="stt_result" placeholder="">
+                    </div>
+                  </div>
+                  <div class="form-group row mb-0">
+                    <label for="final_result" class="col-sm-4 col-form-label">기가지니 답변</label>
+                    <div class="col-sm-8">
+                      <textarea readonly class="form-control-plaintext" id="final_result" rows="3" placeholder=""></textarea>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            -->
+          </div>
+        </div>
+    
+        <div class="flex-box media-card">
+          <div class="row">
+              <div class="col-md-5 col-sm-12">
+                  <img id="media_img" src="public/image/play.png" alt="" class="p-2" style="width: 100%;">
+              </div>
+              <div class="media-info col-md-7 pv-2 text-left">
+                <div class="media-static-nowplaying mt-3">
+                  <span style="font-weight: 500;">NOW PLAYING</span>
+                </div>
+                <div class="mb-3" style="min-height: 1em;">
+                  <span id="media_title"></span>
+                </div>
+                <div class="mb-2" style="font-size: 0.9em; min-height: 1em;">
+                  <span id="media_artist"></span>
+                </div>
+                <div class="text-right mb-1" style="font-size: 0.9em; min-height: 1em;">
+                  <span id="media_playtime"></span>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar w-0" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="flex-box text-center" style="background: transparent; color: #dadada; font-weight: 300; font-size: 0.9em; line-height: 1.5em">
+          <i class="fa fa-laugh mr-1"></i>
+            오른쪽 아래 마이크 버튼을 클릭한 후, 
+            "라디오 틀어줘",  "음악 들을래",  "팟캐스트 들려줘",  "날씨 알려줘" 등을 요청해 보세요!
+        </div>
+      </div>
+    <div id='player'>
+    </div>
+
+    <!-- TODO: modal dialog for setting-->
+    <div class="modal fade fade-custom in" tabindex="-1" role="dialog" id="mdl_setting">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Configs</h5>
+          </div>
+          <div class="modal-body">
+            <form data-toggle="validator">
+              <div class="form-group row">
+                <label for="input_server_url" class="col-sm-3 col-form-label">Server</label>
+                <div class="col-sm-9">
+                  <input type="text" readonly class="form-control-plaintext" id="input_server_url" required>
+                </div>
+              </div>
+
+              <div class="h-divider"></div>
+
+              <div class="form-group row mt-3">
+                <label for="input_client_id" class="col-sm-3 col-form-label">Client ID</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="input_client_id" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="input_client_key" class="col-sm-3 col-form-label">Client Key</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="input_client_key" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="input_client_secret" class="col-sm-3 col-form-label">Client Secret</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="input_client_secret" required>
+                </div>
+              </div>
+
+              <div class="text-warn mt-4" id="warning">
+                <span> * 개발자 포털을 통해 Client Key를 발급 받은 뒤 사용하세요. </span>
+              </div>
+
+              <div class="h-divider"></div>
+
+              <div class="mt-3">
+                <button type="submit" class="btn btn-primary float-right" id="btn_mdl_save" onclick="setConfig();">Save changes</button>  
+                <button type="button" class="btn btn-secondary float-right mr-1" id="btn_mdl_close" onclick="hideConfig();">Close</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap-btn-command">
+      <button class="btn btn-lg btn-danger btn-circle" id="btn_command"><i class="fa fa-microphone"></i></button>
+    </div>
+    <div class="footer">
+      <div class="mt-3 mb-3 text-center">&copy; 2020, AI Agent</div>
+    </div>
+  </body>
+</html>

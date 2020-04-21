@@ -1,0 +1,34 @@
+.allert {
+    min-width: 250px;
+    max-width: 500px;
+    padding: 12px;
+    font-size: 0.9em;
+    cursor: pointer;
+    background-color: #fff;
+    color: #454857;
+    position: absolute;
+    z-index: 9999;
+    line-height: 1.5;
+}
+
+.allert span {
+    margin-right: 10px;
+}
+
+.allert-top-right {
+    top: 20px;
+    right: 20px;
+}
+
+.allert-fadeout {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 0.3s linear;
+}
+
+@media (max-width: 600px) {
+    .allert {
+        max-width: 350px;
+        border: 1px solid gray;
+    }
+}

@@ -1,0 +1,130 @@
+body {
+    font-size: 14px;
+    padding: 15px;
+    padding-top: 30px;
+    font-family: 'Lato', 'Noto Sans KR', sans-serif;    
+    line-height: 1.1;
+    background: rgb(2,0,36);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(16,46,59,1) 45%, rgba(0,173,204,1) 100%) fixed;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 800px;
+}
+.flex-container > .flex-box {
+    margin:5px;
+    padding: 25px;
+    width: 450px;
+    min-height: 100px;
+    text-align: center;
+    background: #fff;
+}
+
+.flex-container > .flex-box.mcard {
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(221, 221, 221, 0.19);
+}
+.flex-container > .flex-box.media-card {
+    padding: 0;
+}
+.flex-container > .media-card .media-info {
+    margin-left: -15px;
+}
+.flex-container > .media-card .media-static-nowplaying  {
+    margin-bottom: 3rem;
+}
+.flex-container > .media-card .progress {
+    height: 0.2em;
+}
+.flex-container > .media-card .progress .progress-bar {
+    background-color: #0091ab;
+}
+
+
+.mcard-header {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.mcard-status {
+    color: #696969;
+    font-weight: 400;
+}
+.mcard-controls button {
+    font-size: 0.95em;
+}
+.mcard-body form {
+    color: #696969;
+    font-weight: 300;
+    font-size: 0.9em;
+}
+.mcard-body form label {
+    text-align: left;
+}
+.footer {
+    position: fixed;
+    top: 97%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #e6e3e3;
+    font-weight: 300;
+}
+
+.wrap-btn-command {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: #ed1b25;
+}
+
+.btn-danger.btn-circle{
+    border-radius: 50% !important;
+    -webkit-box-shadow: 0px 0px 3px 1px #ed1b25;
+    -moz-box-shadow:    0px 0px 3px 1px #ed1b25;
+    box-shadow:         0px 0px 3px 1px #ed1b25;
+}
+
+.fade-custom {
+    -webkit-transition: all .30s linear !important ;
+    -o-transition: all .30s linear !important ;
+    transition: all .30s linear !important ;
+    transform: scale(0) !important ;
+  }
+  
+.fade.in {
+transform: scale(1) !important ;
+}
+
+.h-divider{
+    margin-top:5px;
+    margin-bottom:5px;
+    height:1px;
+    width:100%;
+    border-top:1px solid #f1f1f1;
+}
+
+.text-warn {
+    color: #ed1b25;
+    font-size: small;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding-top: 0;
+    }
+    .flex-container > .flex-box {
+        width: 100%;
+        padding: 15px;
+    }
+    .flex-container > .media-card .media-info {
+        display: none;
+    }
+    .footer {
+        display: none;
+    }
+    #mybutton {
+        bottom: 10px;
+        right: 10px;
+    }
+}
